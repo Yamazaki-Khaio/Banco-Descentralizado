@@ -13,3 +13,119 @@ Conta criada: 12344 saldo: - 5000 relogio logico: 1
 Consulta de saldo: 12344 saldo: 5000 relogio logico: 3
 Conta criada: 12344 saldo: - 5000 relogio logico: 2
 Consulta de saldo: 12344 saldo: 5000 relogio logico: 3
+Conta criada: 12354 saldo: - 5000 relogio logico: 5
+Consulta de saldo: 12354 saldo: 5000 relogio logico: 8
+Consulta de saldo: 12354 saldo: 5000 relogio logico: 10
+Saque realizado: 12354 - 2000 - 11
+Consulta de saldo: 12354 saldo: 3000 relogio logico: 12
+Saque realizado: 12354 - 2000 - 13
+Conta criada: 23331 - Saldo: 5000 - Relógio vetorial: {'127.0.0.1': 1}
+Conta criada: 23331 - Saldo: 5000 - Relógio vetorial: {'127.0.0.1': 1}
+Conta criada: 23331 - Saldo: 5000 - Relógio vetorial: {'127.0.0.1': 1}
+Conta criada: 23331 - Saldo: 5000 - Relógio vetorial: {'127.0.0.1': 1}
+Conta criada: 2000 saldo: - 5000 relogio logico: 1
+Conta criada: 2000 saldo: - 5000 relogio logico: {'127.0.0.1': 1}
+Conta criada: conta1 saldo: - 100 relogio logico: {'127.0.0.1': 4}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 5}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 6}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 11}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 13}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 14}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 15}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 16}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 22}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 24}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 25}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 26}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 27}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 28}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 30}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 32}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 33}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 34}
+Consulta de saldo: conta1 saldo: 230 relogio logico: {'127.0.0.1': 42}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 43}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 44}
+Consulta de saldo: conta1 saldo: 250 relogio logico: {'127.0.0.1': 47}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 48}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 49}
+Conta criada: conta1 saldo: - 100 relogio logico: {'127.0.0.1': 1}
+Consulta de saldo: conta1 saldo: 100 relogio logico: {'127.0.0.1': 2}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 3}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 4}
+Consulta de saldo: conta1 saldo: 120 relogio logico: {'127.0.0.1': 7}
+Depósito realizado: conta1 - 50 - {'127.0.0.1': 8}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 9}
+Conta criada: conta1 saldo: - 100 relogio logico: {'127.0.0.1': 1}
+Consulta de saldo: conta1 saldo: 100 relogio logico: {'127.0.0.1': 2}
+Deposito realizado: conta1 - 50 - {'127.0.0.1': 3}
+Conta criada: conta1 saldo: - 100 relogio logico: {'127.0.0.1': 1}
+Consulta de saldo: conta1 saldo: 100 relogio logico: {'127.0.0.1': 2}
+Deposito realizado: conta1 - 50 - {'127.0.0.1': 3}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 4}
+Conta criada: conta1 saldo: - 100 relogio logico: {'127.0.0.1': 1}
+Conta criada: conta2 saldo: - 200 relogio logico: {'127.0.0.1': 2}
+Consulta de saldo: conta1 saldo: 100 relogio logico: {'127.0.0.1': 3}
+Deposito realizado: conta1 - 50 - {'127.0.0.1': 4}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 5}
+Transferência realizada: conta1 -> conta2 - 20 - {'127.0.0.1': 6}
+Conta criada: conta1 saldo: - 100 relogio logico: {'127.0.0.1': 1}
+Conta criada: conta2 saldo: - 200 relogio logico: {'127.0.0.1': 2}
+Consulta de saldo: conta1 saldo: 100 relogio logico: {'127.0.0.1': 3}
+Deposito realizado: conta1 - 50 - {'127.0.0.1': 4}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 5}
+Transferência realizada: conta1 -> conta2 - 20 - {'127.0.0.1': 6}
+Consulta de saldo: conta1 saldo: 100 relogio logico: {'127.0.0.1': 9}
+Deposito realizado: conta1 - 50 - {'127.0.0.1': 10}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 11}
+Transferência realizada: conta1 -> conta2 - 20 - {'127.0.0.1': 12}
+Conta criada: conta1 saldo: - 100 relogio logico: {'127.0.0.1': 1}
+Conta criada: conta2 saldo: - 200 relogio logico: {'127.0.0.1': 2}
+Consulta de saldo: conta1 saldo: 100 relogio logico: {'127.0.0.1': 3}
+Deposito realizado: conta1 - 50 - {'127.0.0.1': 4}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 5}
+Transferência realizada: conta1 -> conta2 - 20 - {'127.0.0.1': 6}
+Consulta de saldo: conta1 saldo: 100 relogio logico: {'127.0.0.1': 9}
+Deposito realizado: conta1 - 50 - {'127.0.0.1': 10}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 11}
+Transferência realizada: conta1 -> conta2 - 20 - {'127.0.0.1': 12}
+Conta criada: conta1 saldo: - 100 relogio logico: {'127.0.0.1': 6}
+Deposito realizado: conta1 - 50 - {'127.0.0.1': 7}
+Saque realizado: conta1 - 30 - {'127.0.0.1': 8}
+Consulta de saldo: conta1 saldo: 120 relogio logico: {'127.0.0.1': 9}
+Conta criada: conta2 saldo: - 50 relogio logico: {'127.0.0.1': 11}
+Deposito realizado: conta1 - 50 - {'127.0.0.1': 12}
+Saque realizado: conta2 - 30 - {'127.0.0.1': 13}
+Transferência realizada: conta1 -> conta2 - 20 - {'127.0.0.1': 14}
+Consulta de saldo: conta1 saldo: 150 relogio logico: {'127.0.0.1': 15}
+Consulta de saldo: conta2 saldo: 40 relogio logico: {'127.0.0.1': 16}
+Transferência realizada: conta1 -> conta2 - 30 - {'127.0.0.1': 19}
+Transferência realizada: conta2 -> conta1 - 40 - {'127.0.0.1': 20}
+Consulta de saldo: conta1 saldo: 160 relogio logico: {'127.0.0.1': 21}
+Consulta de saldo: conta2 saldo: 30 relogio logico: {'127.0.0.1': 22}
+Transferência realizada: conta1 -> conta2 - 40 - {'127.0.0.1': 25}
+Transferência realizada: conta1 -> conta2 - 30 - {'127.0.0.1': 26}
+Consulta de saldo: conta1 saldo: 90 relogio logico: {'127.0.0.1': 27}
+Consulta de saldo: conta2 saldo: 100 relogio logico: {'127.0.0.1': 28}
+Conta criada: conta1 saldo: - 100 relogio logico: {'127.0.0.1': 1}
+Conta criada: conta2 saldo: - 50 relogio logico: {'127.0.0.1': 2}
+Transferência realizada: conta1 -> conta2 - 40 - {'127.0.0.1': 3}
+Transferência realizada: conta1 -> conta2 - 30 - {'127.0.0.1': 4}
+Consulta de saldo: conta1 saldo: 30 relogio logico: {'127.0.0.1': 5}
+Consulta de saldo: conta2 saldo: 120 relogio logico: {'127.0.0.1': 6}
+Conta criada: conta1 saldo: - 100 relogio logico: {'127.0.0.1': 1}
+Conta criada: conta2 saldo: - 50 relogio logico: {'127.0.0.1': 2}
+Transferência realizada: conta1 -> conta2 - 40 - {'127.0.0.1': 3}
+Transferência realizada: conta1 -> conta2 - 30 - {'127.0.0.1': 4}
+Consulta de saldo: conta1 saldo: 30 relogio logico: {'127.0.0.1': 5}
+Consulta de saldo: conta2 saldo: 120 relogio logico: {'127.0.0.1': 6}
+Transferência realizada: conta2 -> conta1 - 20 - {'127.0.0.1': 9}
+Transferência realizada: conta1 -> conta2 - 30 - {'127.0.0.1': 10}
+Transferência realizada: conta2 -> conta1 - 10 - {'127.0.0.1': 12}
+Consulta de saldo: conta1 saldo: 30 relogio logico: {'127.0.0.1': 13}
+Consulta de saldo: conta2 saldo: 120 relogio logico: {'127.0.0.1': 14}
+Transferência realizada: conta2 -> conta1 - 20 - {'127.0.0.1': 17}
+Transferência realizada: conta1 -> conta2 - 40 - {'127.0.0.1': 18}
+Transferência realizada: conta2 -> conta1 - 10 - {'127.0.0.1': 20}
+Consulta de saldo: conta1 saldo: 20 relogio logico: {'127.0.0.1': 21}
+Consulta de saldo: conta2 saldo: 130 relogio logico: {'127.0.0.1': 22}
