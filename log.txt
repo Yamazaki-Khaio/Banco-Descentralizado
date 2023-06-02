@@ -1,2 +1,0 @@
-2023-06-01 11:08:37,655 - INFO - Conta criada: 123 - Saldo: 50000 - Relógio vetorial: {'127.0.0.1': 1}
-2023-06-01 11:09:28,918 - INFO - Conta criada: 123 - Saldo: 50000 - Relógio vetorial: {'127.0.0.1': 1}

@@ -36,6 +36,9 @@ def incrementar_relogio():
 
 # Classe para processar as operações de replicação em segundo plano
 class ReplicacaoThread(threading.Thread):
+    def __init__(self):
+        super(ReplicacaoThread, self).__init__()
+        self.fila_replicacao = fila_replicacao
     def run(self):
         while True:
             data = fila_replicacao.get()
@@ -94,24 +97,28 @@ class ReplicacaoThread(threading.Thread):
     def finalizar(self):
         fila_replicacao.put(None)
 
+@app.route('/', methods=['GET'])
+def index():
+    return '''
+        <h1>Servidor de Contas Bancárias</h1>
+        <p>API para criar, consultar e operar contas bancárias.</p>
+    '''
 
 
 # Rota para criar uma nova conta bancária
 @app.route('/contas', methods=['POST'])
 def criar_conta():
     incrementar_relogio()
+    dados = request.get_json()
+    id_conta = dados.get('id_conta')
+    saldo = dados.get('saldo')
+    if id_conta is None or saldo is None:
+        return jsonify({'sucesso': False, 'mensagem': 'Dados inválidos'})
+
+    if id_conta in contas:
+        return jsonify({'sucesso': False, 'mensagem': 'Conta já existe'})
+
     with mutex:
-        dados = request.get_json()
-        id_conta = dados.get('id_conta')
-        saldo = dados.get('saldo')
-
-        if id_conta is None or saldo is None:
-            return jsonify({'sucesso': False, 'mensagem': 'Dados inválidos'})
-
-        if id_conta in contas:
-            return jsonify({'sucesso': False, 'mensagem': 'Conta já existe'})
-
-
         contas[id_conta] = saldo
         bloqueios[id_conta] = threading.Lock()
 
@@ -124,9 +131,8 @@ def criar_conta():
 @app.route('/contas/<id_conta>', methods=['GET'])
 def consultar_saldo(id_conta):
     incrementar_relogio()
+    saldo = contas.get(id_conta)
     with mutex:
-        saldo = contas.get(id_conta)
-
         if saldo is None:
             return jsonify({'sucesso': False, 'mensagem': 'Conta não encontrada'})
         log.info('Consulta de saldo: ' + str(id_conta) + ' saldo: ' + str(saldo) + ' relogio logico: ' + str(relogio))
@@ -235,6 +241,7 @@ def realizar_transacao_outro_servidor():
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 if __name__ == '__main__':
+    log.info('Servidor iniciado: ' + local_ip)
     # Verificar se foi passado o número de porta como argumento
     if 'PORT' in os.environ:
         port = int(os.environ['PORT'])
@@ -245,4 +252,9 @@ if __name__ == '__main__':
     replicacao_thread = ReplicacaoThread()
     replicacao_thread.start()
 
+
     app.run(host=local_ip, port=port, debug=True)
+    replicacao_thread.finalizar()
+    replicacao_thread.join()
+
+
