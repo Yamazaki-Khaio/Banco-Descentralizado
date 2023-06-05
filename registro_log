@@ -3,3 +3,15 @@ Conta criada: conta2 saldo: - 50 relogio logico: {'127.0.0.1': 2}
 Transferência realizada: conta1 -> conta2 - 100 - {'127.0.0.1': 3}
 Consulta de saldo: conta1 saldo: 0 relogio logico: {'127.0.0.1': 5}
 Consulta de saldo: conta2 saldo: 150 relogio logico: {'127.0.0.1': 6}
+Conta criada: 123456 saldo: - 1000 relogio logico: {'127.0.0.1': 1}
+Consulta de saldo: 123456 saldo: 1000 relogio logico: {'127.0.0.1': 2}
+Deposito realizado: 123456 - 500 - {'127.0.0.1': 3}
+Saque realizado: 123456 - 200 - {'127.0.0.1': 4}
+Conta criada: 789012 saldo: - 2000 relogio logico: {'127.0.0.1': 5}
+Transferência realizada: 123456 -> 789012 - 300 - {'127.0.0.1': 6}
+Consulta de saldo: 123456 saldo: 1000 relogio logico: {'127.0.0.1': 7}
+Consulta de saldo: 789012 saldo: 2300 relogio logico: {'127.0.0.1': 8}
+Conta criada: 123 saldo: - 100 relogio logico: {'127.0.0.1': 10}
+Deposito realizado: 123 - 50 - {'127.0.0.1': 11}
+Saque realizado: 123 - 30 - {'127.0.0.1': 12}
+Consulta de saldo: 123 saldo: 120 relogio logico: {'127.0.0.1': 14}

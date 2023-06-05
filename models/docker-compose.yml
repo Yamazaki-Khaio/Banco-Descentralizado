@@ -4,7 +4,7 @@ services:
   servidor1:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
       - "5000:5000"
     volumes:
@@ -13,7 +13,7 @@ services:
   servidor2:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
       - "5001:5000"
     volumes:
@@ -22,7 +22,7 @@ services:
   servidor3:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
       - "5002:5000"
     volumes:

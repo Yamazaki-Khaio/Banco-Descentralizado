@@ -1,16 +1,17 @@
+import json
 import logging
 import os
-import queue
 import socket
+from queue import Queue
 import requests
 from flask import Flask, request, jsonify
 import threading
+
 app = Flask(__name__)
 # Obter o endereço IP da máquina local
 local_ip = socket.gethostbyname(socket.gethostname())
 
-
-# Dicionário para armazenar as contas bancárias
+# armazenar dados
 contas = {}
 bloqueios = {}
 relogio = {}
@@ -19,12 +20,28 @@ log.setLevel(logging.INFO)
 file_handler = logging.FileHandler('registro_log')
 log.addHandler(file_handler)
 
+# Lista de URLs dos servidores
+server_urls = [
+    'http://localhost:5000',
+    'http://192.168.3.2:5000',
+    'http://localhost:5002',
+    'http://localhost:5003',
+    'http://localhost:5004'
+]
+
+def get_available_port():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(('localhost', 0))
+    _, port = s.getsockname()
+    s.close()
+    return port
 
 # Fila de mensagens para replicação do log
-fila_replicacao = queue.Queue()
+fila_replicacao = Queue()
 
-#mutex para exclusão mútua
+# mutex para exclusão mútua
 mutex = threading.Lock()
+
 
 # Função para incrementar o relógio vetorial
 def incrementar_relogio():
@@ -34,11 +51,12 @@ def incrementar_relogio():
         else:
             relogio[request.remote_addr] = 1
 
+
 # Classe para processar as operações de replicação em segundo plano
 class ReplicacaoThread(threading.Thread):
     def __init__(self):
         super(ReplicacaoThread, self).__init__()
-        self.fila_replicacao = fila_replicacao
+
     def run(self):
         while True:
             data = fila_replicacao.get()
@@ -49,20 +67,21 @@ class ReplicacaoThread(threading.Thread):
 
     def replicar_log(self, data):
         incrementar_relogio()
+        data_dict = json.loads(data)
+        operacao = data_dict['operacao']
 
-        operacao = data['operacao']
 
         if operacao == 'criar_conta':
-            id_conta = data['id_conta']
-            saldo = data['saldo']
+            id_conta = data_dict['id_conta']
+            saldo = data_dict['saldo']
 
             if id_conta not in contas:
                 contas[id_conta] = saldo
                 bloqueios[id_conta] = threading.Lock()
 
         elif operacao == 'deposito':
-            id_conta = data['id_conta']
-            valor = data['valor']
+            id_conta = data_dict['id_conta']
+            valor = data_dict['valor']
 
             saldo = contas.get(id_conta)
             if saldo is not None:
@@ -70,8 +89,8 @@ class ReplicacaoThread(threading.Thread):
                 contas[id_conta] = saldo
 
         elif operacao == 'saque':
-            id_conta = data['id_conta']
-            valor = data['valor']
+            id_conta = data_dict['id_conta']
+            valor = data_dict['valor']
 
             saldo = contas.get(id_conta)
             if saldo is not None and valor <= saldo:
@@ -79,9 +98,9 @@ class ReplicacaoThread(threading.Thread):
                 contas[id_conta] = saldo
 
         elif operacao == 'transferencia':
-            id_origem = data['id_origem']
-            id_destino = data['id_destino']
-            valor = data['valor']
+            id_origem = data_dict['id_origem']
+            id_destino = data_dict['id_destino']
+            valor = data_dict['valor']
 
             saldo_origem = contas.get(id_origem)
             saldo_destino = contas.get(id_destino)
@@ -92,10 +111,19 @@ class ReplicacaoThread(threading.Thread):
                 contas[id_origem] = saldo_origem
                 contas[id_destino] = saldo_destino
 
+        for url in server_urls:
+            if url != local_ip:
+                try:
+                    response = requests.post(url + '/replicar', json=data_dict)
+                    response.raise_for_status()
+                except requests.exceptions.RequestException as e:
+                    log.error(f'Erro ao replicar log para {url}: {e}')
+
         log.info(f'Operação replicada: {operacao} - {data} - Relógio lógico: {relogio}')
 
     def finalizar(self):
         fila_replicacao.put(None)
+
 
 @app.route('/', methods=['GET'])
 def index():
@@ -103,7 +131,12 @@ def index():
         <h1>Servidor de Contas Bancárias</h1>
         <p>API para criar, consultar e operar contas bancárias.</p>
     '''
+@app.route('/log', methods=['GET'])
+def visualizar_log():
+    with open('registro_log', 'r') as file:
+        log_content = file.read()
 
+    return log_content
 
 # Rota para criar uma nova conta bancária
 @app.route('/contas', methods=['POST'])
@@ -112,6 +145,7 @@ def criar_conta():
     dados = request.get_json()
     id_conta = dados.get('id_conta')
     saldo = dados.get('saldo')
+
     if id_conta is None or saldo is None:
         return jsonify({'sucesso': False, 'mensagem': 'Dados inválidos'})
 
@@ -123,9 +157,9 @@ def criar_conta():
         bloqueios[id_conta] = threading.Lock()
 
         log.info('Conta criada: ' + str(id_conta) + ' saldo: - ' + str(saldo) + ' relogio logico: ' + str(relogio))
-        fila_replicacao.put({'operacao': 'criar_conta', 'id_conta': id_conta, 'saldo': saldo})
-
+        fila_replicacao.put({'operacao': 'criar_conta', 'id_origem': id_conta, 'saldo': saldo, 'relogio': relogio})
     return jsonify({'sucesso': True, 'mensagem': 'Conta criada'})
+
 
 # Rota para consultar o saldo de uma conta
 @app.route('/contas/<id_conta>', methods=['GET'])
@@ -139,7 +173,8 @@ def consultar_saldo(id_conta):
 
     return jsonify({'sucesso': True, 'saldo': saldo})
 
-#função para saque e deposito
+
+# função para saque e deposito
 def realizar_transacao(id_conta, tipo_operacao):
     incrementar_relogio()
     dados = request.get_json()
@@ -166,7 +201,8 @@ def realizar_transacao(id_conta, tipo_operacao):
             saldo -= valor
 
         contas[id_conta] = saldo
-        log.info(tipo_operacao.capitalize() + ' realizado: ' + str(id_conta) + ' - ' + str(valor) + ' - ' + str(relogio))
+        log.info(
+            tipo_operacao.capitalize() + ' realizado: ' + str(id_conta) + ' - ' + str(valor) + ' - ' + str(relogio))
         fila_replicacao.put({'operacao': tipo_operacao, 'id_conta': id_conta, 'valor': valor, 'relogio': relogio})
 
         if tipo_operacao == 'deposito':
@@ -177,11 +213,11 @@ def realizar_transacao(id_conta, tipo_operacao):
         return jsonify({'sucesso': True, 'mensagem': mensagem_sucesso})
 
 
-
 # Rota para realizar um depósito em uma conta
 @app.route('/contas/<id_conta>/deposito', methods=['POST'])
 def realizar_deposito(id_conta):
     return realizar_transacao(id_conta, 'deposito')
+
 
 # Rota para realizar um saque em uma conta
 @app.route('/contas/<id_conta>/saque', methods=['POST'])
@@ -189,7 +225,7 @@ def realizar_saque(id_conta):
     return realizar_transacao(id_conta, 'saque')
 
 
-#rota para realizar transferencia
+# rota para realizar transferencia
 @app.route('/transferencia', methods=['POST'])
 def realizar_transferencia():
     incrementar_relogio()
@@ -206,15 +242,20 @@ def realizar_transferencia():
             return jsonify({'sucesso': False, 'mensagem': 'Saldo insuficiente na conta de origem'})
         with bloqueios[id_origem]:
             with bloqueios[id_destino]:
-                #Realizar a transferência
+                # Realizar a transferência
                 saldo_origem -= valor
                 contas[id_origem] -= valor
                 contas[id_destino] += valor
 
-        log.info('Transferência realizada: ' + str(id_origem) + ' -> ' + str(id_destino) + ' - ' + str(valor) + ' - ' + str(relogio))
-        fila_replicacao.put({'operacao': 'transferencia', 'id_origem': id_origem, 'id_destino': id_destino, 'valor': valor, 'relogio': relogio})
+        log.info(
+            'Transferência realizada: ' + str(id_origem) + ' -> ' + str(id_destino) + ' - ' + str(valor) + ' - ' + str(
+                relogio))
+        fila_replicacao.put(
+            {'operacao': 'transferencia', 'id_origem': id_origem, 'id_destino': id_destino, 'valor': valor,
+             'relogio': relogio})
 
         return jsonify({'sucesso': True, 'mensagem': 'Transferência realizada com sucesso'})
+
 
 # Rota para consultar o saldo de uma conta em outro servidor
 @app.route('/saldo-outro-servidor/<id_conta>/<endereco_servidor>', methods=['GET'])
@@ -222,6 +263,7 @@ def consultar_saldo_outro_servidor(id_conta, endereco_servidor):
     url = f"http://{endereco_servidor}/contas/{id_conta}"
     response = requests.get(url)
     return response.json()
+
 
 # Rota para realizar uma transação em outro servidor
 @app.route('/transacao-outro-servidor', methods=['POST'])
@@ -237,24 +279,25 @@ def realizar_transacao_outro_servidor():
     return response.json()
 
 
-#Configuração do log de registro de operações do servidor
+@app.route('/replicar', methods=['POST'])
+def replicar():
+    data = request.get_json()
+    fila_replicacao.put(json.dumps(data))
+    return jsonify({'message': 'Operação recebida para replicação'})
+
+
+# Configuração do log de registro de operações do servidor
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 if __name__ == '__main__':
-    log.info('Servidor iniciado: ' + local_ip)
+    port = get_available_port()
+    log.info('Servidor iniciado: ' + local_ip + ':' + port)
     # Verificar se foi passado o número de porta como argumento
-    if 'PORT' in os.environ:
-        port = int(os.environ['PORT'])
-    else:
-        port = 5000  # Porta padrão
 
     # Iniciar a thread de replicação em segundo plano
     replicacao_thread = ReplicacaoThread()
     replicacao_thread.start()
 
-
     app.run(host=local_ip, port=port, debug=True)
     replicacao_thread.finalizar()
     replicacao_thread.join()
-
-
