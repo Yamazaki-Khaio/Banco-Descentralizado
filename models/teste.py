@@ -1,68 +1,45 @@
+
 import requests
-import threading
 
-def criar_conta(id_conta, saldo):
-    url = 'http://localhost:5000/contas'
-    data = {'id_conta': id_conta, 'saldo': saldo}
-
-    response = requests.post(url, json=data)
+def test_routes(url1, url2):
+    # Cria uma nova conta na instância 1
+    create_account_url1 = f'{url1}/create_account'
+    data = {'account_number': '123', 'initial_balance': 100}
+    response = requests.post(create_account_url1, json=data)
     print(response.json())
 
-def realizar_deposito(id_conta, valor):
-    url = f'http://localhost:5000/contas/{id_conta}/deposito'
-    data = {'valor': valor}
-
-    response = requests.post(url, json=data)
+    # Faz um depósito na conta criada na instância 1
+    deposit_url1 = f'{url1}/deposit'
+    data = {'account_number': '123', 'amount': 50}
+    response = requests.post(deposit_url1, json=data)
     print(response.json())
 
-def realizar_saque(id_conta, valor):
-    url = f'http://localhost:5000/contas/{id_conta}/saque'
-    data = {'valor': valor}
-
-    response = requests.post(url, json=data)
+    # Obtém o saldo da conta criada na instância 1
+    balance_url1 = f'{url1}/balance/123'
+    response = requests.get(balance_url1)
     print(response.json())
 
-def realizar_transferencia(id_origem, id_destino, valor):
-    url = 'http://localhost:5000/transferencia'
-    data = {'id_origem': id_origem, 'id_destino': id_destino, 'valor': valor}
-
-    response = requests.post(url, json=data)
+    # Obtém todas as contas da instância 1
+    accounts_url1 = f'{url1}/accounts'
+    response = requests.get(accounts_url1)
     print(response.json())
 
-def consultar_saldo(id_conta):
-    url = f'http://localhost:5000/contas/{id_conta}'
-
-    response = requests.get(url)
+    # Obtém todas as contas da instância 2
+    accounts_url2 = f'{url2}/accounts'
+    response = requests.get(accounts_url2)
     print(response.json())
 
-def teste_atomicidade_transferencia():
-    # Criar contas
-    criar_conta('conta1', 100)
-    criar_conta('conta2', 50)
-
-    # Função para realizar uma transferência
-    def realizar_transferencia_concorrente(id_origem, id_destino, valor):
-        realizar_transferencia(id_origem, id_destino, valor)
-
-    # Criar threads para as transferências
-    thread1 = threading.Thread(target=realizar_transferencia_concorrente, args=('conta1', 'conta2', 40))
-    thread2 = threading.Thread(target=realizar_transferencia_concorrente, args=('conta1', 'conta2', 100))
+    # Faz uma requisição para obter os dados de todas as contas na instância 1
+    accounts_from_server1_url2 = f'{url2}/accounts_from_server1'
+    response = requests.get(accounts_from_server1_url2)
+    print(response.json())
 
 
 
-    # Iniciar as threads
-    thread1.start()
-    thread2.start()
+if __name__ == '__main__':
+    # Define as URLs das instâncias do servidor Flask
+    url1 = 'http://localhost:51636'  # URL da primeira instância
+    url2 = 'http://localhost:51649'  # URL da segunda instância
 
-
-    # Esperar as threads terminarem
-    thread1.join()
-    thread2.join()
-
-
-    # Consultar saldo após as transferências
-    consultar_saldo('conta1')
-    consultar_saldo('conta2')
-
-# Executar o teste de atomicidade das transferências
-teste_atomicidade_transferencia()
+    # Executa o teste das rotas
+    test_routes(url1, url2)
