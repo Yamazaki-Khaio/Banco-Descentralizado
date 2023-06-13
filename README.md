@@ -30,7 +30,7 @@ Executando o sistema
 Para iniciar o sistema de contas bancárias distribuído, execute o seguinte comando no terminal:
 
 Copy code
-python app.py
+python api.py
 O servidor será iniciado e estará pronto para receber requisições.
 
 # Uso do sistema
@@ -49,6 +49,16 @@ POST /transferencia: Realiza uma transferência entre contas. O corpo da requisi
 GET /saldo-outro-servidor/<id_conta>/<endereco_servidor>: Consulta o saldo de uma conta em outro servidor. O parâmetro id_conta é o ID da conta desejada e o parâmetro endereco_servidor é o endereço (URL) do servidor.
 
 POST /transacao-outro-servidor: Realiza uma transação em outro servidor. O corpo da requisição deve conter o ID da conta, o valor da transação e o endereço do servidor.
+
+# Introdução
+Este código implementa um servidor de contas bancárias que permite a criação, consulta e operação de contas. O servidor utiliza a arquitetura distribuída para replicar operações em outros servidores, garantindo a consistência dos dados, utilizando a biblioteca pika para se comunicar com uma fila de mensagens RabbitMQ, permitindo a replicação assíncrona das operações em outros servidores.
+
+# Metodologia
+O código utiliza o framework Flask para criar um servidor web e expor APIs para interação com as contas bancárias. A comunicação entre os servidores é feita por meio do protocolo HTTP. Além disso, é utilizado o RabbitMQ para implementar uma fila de replicação de operações entre os servidores.
+O servidor utiliza um mecanismo de bloqueio chamado Bakery Lock para garantir a consistência das operações concorrentes em uma mesma conta bancária.
+
+# Objetivo
+O objetivo deste código é fornecer uma solução distribuída para a criação, consulta e operação de contas bancárias. Ele permite a replicação de operações entre vários servidores, garantindo a consistência dos dados em um ambiente distribuído. O código é apenas uma implementação simples para fins academicos e pode ser utilizado como base para construir um sistema bancário distribuído com alta disponibilidade e escalabilidade.
 
 # Contribuição
 Contribuições são bem-vindas após o dia 06/06/2023! Sinta-se à vontade para abrir uma issue ou enviar um pull request com melhorias, correções de bugs ou novas funcionalidades para o projeto.
