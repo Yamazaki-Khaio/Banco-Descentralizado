@@ -1,0 +1,159 @@
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Conta criada: 2231 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Consulta de saldo: 2231 saldo: 5000 relogio logico: {'192.168.3.2': 2}
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Conta criada: 2231 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Conta criada: 12345 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Conta criada: 12345 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2': 2}
+Conta criada: 12346 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Conta criada: 12346 saldo: - 5000 relogio logico: {'192.168.3.2': 2}
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Servidor iniciado: 192.168.3.2
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Servidor iniciado: 192.168.3.2:61236
+Servidor iniciado: 192.168.3.2:61238
+Servidor iniciado: 192.168.3.2:61273
+Servidor iniciado: 192.168.3.2:61275
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2': 1}
+Conta criada: 12346 saldo: - 5000 relogio logico: {'192.168.3.2': 2}
+Servidor iniciado: 192.168.3.2:61361
+Servidor iniciado: 192.168.3.2:61362
+Servidor iniciado: 192.168.3.2:61706
+Servidor iniciado: 192.168.3.2:61708
+Servidor iniciado: 192.168.3.2:61710
+Servidor iniciado: 192.168.3.2:61712
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2:61708': 1}
+Servidor iniciado: 192.168.3.2:61888
+Servidor iniciado: 192.168.3.2:61900
+Servidor iniciado: 192.168.3.2:61902
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2:61902': 1}
+Servidor iniciado: 192.168.3.2:61930
+Servidor iniciado: 192.168.3.2:61932
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2:61932': 1}
+Servidor iniciado: 192.168.3.2:62075
+Servidor iniciado: 192.168.3.2:62100
+Servidor iniciado: 192.168.3.2:62102
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2:62102': 1}
+Servidor iniciado: 192.168.3.2:62519
+Servidor iniciado: 192.168.3.2:62553
+Servidor iniciado: 192.168.3.2:62555
+Servidor iniciado: 192.168.3.2:62582
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2:62582': 1}
+Erro ao replicar log para 172.16.103.2:5000: No connection adapters were found for '172.16.103.2:5000/replicar'
+Erro ao replicar log para 172.16.103.3:5000: No connection adapters were found for '172.16.103.3:5000/replicar'
+Erro ao replicar log para 172.16.103.4:5000: No connection adapters were found for '172.16.103.4:5000/replicar'
+Operação replicada: criar_conta - {'operacao': 'criar_conta', 'id_origem': '1234', 'saldo': 5000, 'relogio': {'192.168.3.2:62582': 2}} - Relógio lógico: {'192.168.3.2:62582': 2}
+Servidor iniciado: 192.168.3.2:62629
+Conta criada: 12345 saldo: - 5000 relogio logico: {'192.168.3.2:62629': 1}
+Erro ao replicar log para 172.16.103.2:5000: No connection adapters were found for '172.16.103.2:5000/replicar'
+Erro ao replicar log para 172.16.103.3:5000: No connection adapters were found for '172.16.103.3:5000/replicar'
+Erro ao replicar log para 172.16.103.4:5000: No connection adapters were found for '172.16.103.4:5000/replicar'
+Operação replicada: criar_conta - {'operacao': 'criar_conta', 'id_origem': '12345', 'saldo': 5000, 'relogio': {'192.168.3.2:62629': 2}} - Relógio lógico: {'192.168.3.2:62629': 2}
+Servidor iniciado: 192.168.3.2:65305
+Servidor iniciado: 192.168.3.2:65307
+Conta criada: 12345 saldo: - 5000 relogio logico: {'192.168.3.2:65307': 1}
+Erro ao replicar log para 172.16.103.2:5000: No connection adapters were found for '172.16.103.2:5000/replicar'
+Erro ao replicar log para 172.16.103.3:5000: No connection adapters were found for '172.16.103.3:5000/replicar'
+Erro ao replicar log para 172.16.103.4:5000: No connection adapters were found for '172.16.103.4:5000/replicar'
+Operação replicada: criar_conta - {'operacao': 'criar_conta', 'id_origem': '12345', 'saldo': 5000, 'relogio': {'192.168.3.2:65307': 2}} - Relógio lógico: {'192.168.3.2:65307': 2}
+Conta criada: 1234 saldo: - 5000 relogio logico: {'192.168.3.2:65305': 1}
+Erro ao replicar log para 172.16.103.2:5000: No connection adapters were found for '172.16.103.2:5000/replicar'
+Erro ao replicar log para 172.16.103.3:5000: No connection adapters were found for '172.16.103.3:5000/replicar'
+Erro ao replicar log para 172.16.103.4:5000: No connection adapters were found for '172.16.103.4:5000/replicar'
+Operação replicada: criar_conta - {'operacao': 'criar_conta', 'id_origem': '1234', 'saldo': 5000, 'relogio': {'192.168.3.2:65305': 2}} - Relógio lógico: {'192.168.3.2:65305': 2}
+Servidor iniciado: 192.168.3.2:51994
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Servidor iniciado: 192.168.3.2:5002
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Servidor iniciado: 192.168.3.2:5001
+Servidor iniciado: 192.168.3.2:5000
+Consulta de saldo: 12345 saldo: 5000 relogio logico: {'192.168.3.2:5001': 3}
+Consulta de saldo: 1234 saldo: 2500 relogio logico: {'192.168.3.2:5000': 4}
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Consulta de saldo: 1234 saldo: 5000 relogio logico: {'192.168.3.2:5000': 5}
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Consulta de saldo: 1234 saldo: 5000 relogio logico: {'192.168.3.2:5000': 5}
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Consulta de saldo: 1234 saldo: 5000 relogio logico: {'192.168.3.2:5000': 3}
+Consulta de saldo: 12345 saldo: 5000 relogio logico: {'192.168.3.2:5001': 2}
+Consulta de saldo: 12345 saldo: 5200 relogio logico: {'192.168.3.2:5001': 6}
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Consulta de saldo: 12345 saldo: 7500 relogio logico: {'192.168.3.2:5001': 5}
+Consulta de saldo: 1234 saldo: 2500 relogio logico: {'192.168.3.2:5000': 7}
+Consulta de saldo: 1234 saldo: 2500 relogio logico: {'192.168.3.2:5000': 15}
+Consulta de saldo: 123457 saldo: 5000 relogio logico: {'192.168.3.2:5000': 16}
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Consulta de saldo: 123456 saldo: 7500 relogio logico: {'192.168.3.2:5000': 8}
+Consulta de saldo: 123456 saldo: 7500 relogio logico: {'192.168.3.2:5000': 10}
+Consulta de saldo: 1234 saldo: 2500 relogio logico: {'192.168.3.2:5000': 12}
+Servidor iniciado: 192.168.3.2:5000
+Servidor iniciado: 192.168.3.2:5001
+Consulta de saldo: 1234 saldo: 0 relogio logico: {'192.168.3.2:5000': 13}
+Consulta de saldo: 123456 saldo: 7500 relogio logico: {'192.168.3.2:5000': 14}
+Consulta de saldo: 12345 saldo: 10000 relogio logico: {'192.168.3.2:5001': 8}

@@ -14,12 +14,6 @@ import pika
 app = Flask(__name__)
 # Obter o endereço IP da máquina local
 
-def enviar_mensagem_fila_replicacao(data):
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
-    channel = connection.channel()
-    channel.queue_declare(queue='fila_replicacao')
-    channel.basic_publish(exchange='', routing_key='fila_replicacao', body=json.dumps(data).encode('utf-8'))
-    connection.close()
 
 
 def obeter_endereco_ip():
@@ -208,7 +202,7 @@ def criar_conta():
         'relogio': relogio,
     }
 
-    enviar_mensagem_fila_replicacao(data)
+    fila_replicacao.put(data)
     return jsonify({'mensagem': 'Conta criada com sucesso'}), 200
 
 
@@ -252,7 +246,7 @@ def realizar_transacao(id_conta, tipo_operacao):
         'valor': valor,
         'relogio': relogio,
     }
-    enviar_mensagem_fila_replicacao(data)
+    fila_replicacao.put(data)
     return jsonify({'sucesso': True, 'mensagem': mensagem_sucesso})
 
 
@@ -300,7 +294,7 @@ def transferencia(id_conta):
                         'relogio': relogio,
                     }
                     mensagem_sucesso = f'Transferência de {valor} para a conta {conta_destino} realizada'
-                    enviar_mensagem_fila_replicacao(data)
+                    fila_replicacao.put(data)
                     return jsonify({'sucesso': True, 'mensagem': mensagem_sucesso})
 
             # Transferência entre servidores
@@ -310,17 +304,17 @@ def transferencia(id_conta):
                 if servidor_destino is None:
                     return jsonify({'sucesso': False, 'mensagem': 'Servidor não informado'})
                 else:
-                    url = f"http://{servidor_destino}/contas/{conta_destino}/deposito"
+                    url_prepare = f"http://{servidor_destino}/contas/{conta_destino}/prepare"
+                    url_commit = f"http://{servidor_destino}/contas/{conta_destino}/commit"
                     if saldo_origem >= valor:
                         bakery_lock(id_conta)
                         bakery_lock(conta_destino)
+                        
+                        # Fase de votação (PREPARE)
                         payload = {'valor': valor}
-                        response = requests.post(url, json=payload)
-                        if response.status_code == 200:
-                            contas[id_conta] -= valor
-                            bakery_unlock(id_conta)
-                            bakery_unlock(conta_destino)
-
+                        response_pepare = requests.post(url_prepare, json=payload)
+                        if response_pepare.status_code == 200:
+                            # Fase de commit (COMMIT)
                             data = {
                                 'operacao': 'transferencia',
                                 'id_origem': id_conta,
@@ -328,44 +322,58 @@ def transferencia(id_conta):
                                 'valor': valor,
                                 'relogio': relogio,
                             }
+                            
+                            #informar ao servidor de destino para fazer commit
+                            response_commit = requests.post(url_commit, json=payload)
 
-                        mensagem_sucesso = f'Transferência de {valor} para a conta {conta_destino} realizada'
-                        enviar_mensagem_fila_replicacao(data)
-                        return jsonify({'sucesso': True, 'mensagem': mensagem_sucesso})
-                    else:
+                            if response_commit.status_code == 200:
+                                contas[id_conta] -= valor
+                                bakery_unlock(id_conta)
+                                bakery_unlock(conta_destino)
+
+                                mensagem_sucesso = f'Transferência de {valor} para a conta {conta_destino} realizada'
+                                fila_replicacao.put(data)
+                                return jsonify({'sucesso': True, 'mensagem': mensagem_sucesso})
+                            else:
+                                return jsonify({'sucesso': False, 'mensagem': 'Erro ao realizar transferência'})
+                        else:
+                            bakery_unlock(id_conta)
+                            bakery_unlock(conta_destino)
+                            return jsonify({'sucesso': False, 'mensagem': 'Erro ao realizar transferência'})
+                    else:                                
                         return jsonify({'sucesso': False, 'mensagem': 'Saldo insuficiente'})
 
 
     return jsonify({'sucesso': False, 'mensagem': 'Conta destino não encontrada'})
 
 
-# rota para realizar transferencia remota
-@app.route('/contas/<id_conta>/transferencia-remota', methods=['POST'])
-def transferencia_remota(id_conta):
-    incrementar_relogio()
+@app.route('/contas/<id_conta>/prepare', methods=['POST'])
+def prepare(id_conta):
     valor = request.json.get('valor')
-    conta_destino = request.json.get('conta_destino')
 
-    with bloqueio_transferencia:
-        with mutex:
-            if id_conta not in contas:
-                return jsonify({'sucesso': False, 'mensagem': 'Conta de origem não encontrada'})
+    # Verifique se a conta existe
+    if id_conta not in contas:
+        return jsonify({'sucesso': False, 'mensagem': 'Conta não encontrada'}), 404
 
-            if conta_destino not in contas:
-                contas[id_conta] -= valor
-                data = {
-                    'operacao': 'transferencia',
-                    'id_origem': id_conta,
-                    'id_destino': conta_destino,
-                    'valor': valor,
-                    'relogio': relogio,
-                }
-                mensagem_sucesso = f'Transferência de {valor} para a conta {conta_destino} realizada'
-                enviar_mensagem_fila_replicacao(data)
-                return jsonify({'sucesso': True, 'mensagem': mensagem_sucesso})
-            else:
-                return jsonify({'sucesso': False, 'mensagem': 'Conta de destino já existe em outro servidor'})
+    if contas[id_conta] >= valor:
+        # A conta tem saldo suficiente, pode preparar a transação
+        return jsonify({'sucesso': True})
+    else:
+        # A conta não tem saldo suficiente, não pode preparar a transação
+        return jsonify({'sucesso': False, 'mensagem': 'Saldo insuficiente'}), 400
 
+
+@app.route('/contas/<id_conta>/commit', methods=['POST'])
+def commit(id_conta):
+    valor = request.json.get('valor')
+
+    # Verifique se a conta existe
+    if id_conta not in contas:
+        return jsonify({'sucesso': False, 'mensagem': 'Conta não encontrada'}), 404
+
+    # A conta existe, efetue a transação
+    contas[id_conta] += valor
+    return jsonify({'sucesso': True})
 
 
 # Rota para consultar o saldo de uma conta em outro servidor
