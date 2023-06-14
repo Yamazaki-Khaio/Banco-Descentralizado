@@ -44,7 +44,7 @@ POST /contas/<id_conta>/deposito: Realiza um depósito em uma conta específica.
 
 POST /contas/<id_conta>/saque: Realiza um saque em uma conta específica. O corpo da requisição deve conter o valor do saque.
 
-POST /transferencia: Realiza uma transferência entre contas. O corpo da requisição deve conter o ID da conta de origem, o ID da conta de destino e o valor da transferência.
+POST /transferencia<id_conta>: Realiza uma transferência entre contas. O corpo da requisição deve conter o ID da conta de destino e o valor da transferência.
 
 GET /saldo-outro-servidor/<id_conta>/<endereco_servidor>: Consulta o saldo de uma conta em outro servidor. O parâmetro id_conta é o ID da conta desejada e o parâmetro endereco_servidor é o endereço (URL) do servidor.
 
@@ -61,4 +61,4 @@ O servidor utiliza um mecanismo de bloqueio chamado Bakery Lock para garantir a 
 O objetivo deste código é fornecer uma solução distribuída para a criação, consulta e operação de contas bancárias. Ele permite a replicação de operações entre vários servidores, garantindo a consistência dos dados em um ambiente distribuído. O código é apenas uma implementação simples para fins academicos e pode ser utilizado como base para construir um sistema bancário distribuído com alta disponibilidade e escalabilidade.
 
 # Contribuição
-Contribuições são bem-vindas após o dia 06/06/2023! Sinta-se à vontade para abrir uma issue ou enviar um pull request com melhorias, correções de bugs ou novas funcionalidades para o projeto.
+Contribuições são bem-vindas após o dia 20/06/2023! Sinta-se à vontade para abrir uma issue ou enviar um pull request com melhorias, correções de bugs ou novas funcionalidades para o projeto.
